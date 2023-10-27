@@ -103,7 +103,7 @@ def index():
     """
     if request.headers.get('Host', None) not in [
         None,
-        config['core']['domain'],
+        config['core']['base'],
     ]:
         return Error().permission_denied().create()
 

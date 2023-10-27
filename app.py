@@ -9,11 +9,12 @@ import logging
 import os
 from typing import Optional
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 from modules.config import config
 from modules import common, database
 from modules.limiters import limiter
+from modules.errors import Error
 from routers.backend import bp as backend_bp
 
 os.environ['NO_PROXY'] = '*'
@@ -100,6 +101,12 @@ def index():
     主页
     :return:
     """
+    if request.headers.get('Host', None) not in [
+        None,
+        config['core']['domain'],
+    ]:
+        return Error().permission_denied().create()
+
     return render_template(
         'index.html',
         version=version,

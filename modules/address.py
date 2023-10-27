@@ -51,7 +51,7 @@ def create() -> tuple[dict, int]:
 
     try:
         address = Address.create(
-            uuid=uuid4(),
+            uuid=uuid,
             url=f'{config["core"]["proto"]}://{uuid}.{config["core"]["domain"]}/api/callback',
             aes_key=aes_key,
             state=AddressState.Active,
